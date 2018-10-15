@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.weather.pc.searchengine.R;
 import com.weather.pc.searchengine.wev_service.api_maincategories_respone.Maincategories;
 
@@ -41,6 +42,23 @@ public class MaincategoryAdapter extends RecyclerView.Adapter<MaincategoryAdapte
         Maincategories maincategories=maincategoriesList.get(position);
         holder.tv_maincategory.setText(maincategories.getCateName());
         holder.tv_desc.setText(maincategories.getDes());
+       //get image url from web service
+//        String url="";
+//       if(maincategories.getIconName().contains(null)){
+//           holder.imv_maincategory.setImageResource(R.drawable.noimage);
+//       }
+//       else if(maincategories.getIconName().contains("http")){
+//           url=maincategories.getCateName();
+//       }else {
+//           url="http://110.74.194.125:15000/"+maincategories.getIconName();
+//       }
+//            Picasso.get()
+//                .load(url)
+//                .placeholder(R.drawable.ic_launcher_background)
+//                .error(R.drawable.ic_launcher_foreground)
+//                .into(holder.imv_maincategory);
+
+
 
     }
 

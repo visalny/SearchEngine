@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 //      ........set up Navigation button on Toolbar
-        setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
-                this,drawerLayout,toolbar,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+//        setSupportActionBar(toolbar);
+//        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
+//                this,drawerLayout,toolbar,R.string.open,R.string.close);
+//        drawerLayout.addDrawerListener(toggle);
+//        toggle.syncState();
 //      ........end set up Navigation button on Toolbar
 
         //Setup Retrofit
