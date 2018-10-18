@@ -1,5 +1,6 @@
 package com.weather.pc.searchengine;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,10 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.weather.pc.searchengine.activity.SubcategoryActivity;
 import com.weather.pc.searchengine.adapter.MaincategoryAdapter;
+import com.weather.pc.searchengine.adapter.RecylcerProfileAdapter;
+import com.weather.pc.searchengine.callback.MaincategoryClickListener;
 import com.weather.pc.searchengine.wev_service.api_maincategories_respone.Maincategories;
 import com.weather.pc.searchengine.wev_service.api_maincategories_respone.MaincategoriesRespone;
+import com.weather.pc.searchengine.wev_service.api_subcategories_respone.SubCategoriesRespone;
 import com.weather.pc.searchengine.wev_service.web_service_retrofit.SearchEngine;
 
 import java.util.List;
@@ -27,18 +34,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MaincategoryClickListener {
 
     private static final String TAG = "ooo";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    @BindView(R.id.navigationview)
-    NavigationView navigationView;
+
     @BindView(R.id.recyclerview)
     RecyclerView recyclerView;
+    @BindView(R.id.recyclerview_profile)
+    RecyclerView recycler_profile;
     private Retrofit retrofit;
     private SearchEngine searchEngine;
     public static final String BASE_URL="http://110.74.194.125:15000/api/v1/";
@@ -52,26 +61,30 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 //      ........set up Navigation button on Toolbar
-//        setSupportActionBar(toolbar);
-//        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
-//                this,drawerLayout,toolbar,R.string.open,R.string.close);
-//        drawerLayout.addDrawerListener(toggle);
-//        toggle.syncState();
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(
+                this,drawerLayout,toolbar,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 //      ........end set up Navigation button on Toolbar
 
-        //Setup Retrofit
+ //  Setup Retrofit
         setUpRetrofit();
-        //set Layout Manager Recyclerview
+//  set Layout Manager Recyclerview
         setupRecyclerview();
-        //Load main categories from web service
+//  Load main categories from web service
         LoadMaincategories();
 
+//Recycler view Profile
 
+        RecylcerProfileAdapter profileAdapter=new RecylcerProfileAdapter();
+        recycler_profile.setLayoutManager(new LinearLayoutManager(this));
+        recycler_profile.setAdapter(profileAdapter);
     }
 
     private void setupRecyclerview() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new MaincategoryAdapter(this);
+        adapter=new MaincategoryAdapter(this,this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -121,4 +134,15 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
+
+    @Override
+    public void ItemClick(int position,String catname) {
+        Intent intent=new Intent(this,SubcategoryActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("position",position);
+        intent.putExtra("catname",catname);
+        startActivity(intent);
+    }
+
+
 }

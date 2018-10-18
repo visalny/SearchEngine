@@ -18,14 +18,16 @@
             android:layout_height="wrap_content"
             android:text="Category"
             android:textSize="20sp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@id/imv_category_maincategory"
             android:layout_marginTop="5dp"/>
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/tv_description_maincategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Description"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/imv_category_maincategory"
             android:layout_below="@id/tv_category_maincategory"
             android:layout_marginTop="8dp"/>
     </RelativeLayout>
