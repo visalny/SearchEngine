@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.RegisterWebsiteActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/basic_color">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <ImageView
+               android:id="@+id/imv_keyback_registernew_website"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/ic_go_back_left_arrow"
+               android:layout_centerVertical="true"/>
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Register New Website"
+               android:layout_centerVertical="true"
+               android:layout_toRightOf="@+id/imv_keyback_registernew_website"
+               android:textColor="#FFF"
+               android:layout_marginLeft="25dp"
+               android:textSize="20sp"
+              />
+       </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="REGISTER"
+        android:gravity="center"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter name"
+                android:drawableLeft="@drawable/ic_register"
+                android:drawablePadding="10dp"/>
+            <EditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter phone"
+                android:drawableLeft="@drawable/ic_smartphone_call"
+                android:drawablePadding="10dp"/>
+            <EditText
+                android:id="@+id/edt_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter link"
+                android:drawableLeft="@drawable/ic_worldwide"
+                android:drawablePadding="10dp"/>
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter email"
+                android:drawableLeft="@drawable/ic_mail"
+                android:drawablePadding="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter address"
+                android:drawableLeft="@drawable/ic_location"
+                android:drawablePadding="10dp"/>
+            <Button
+                android:id="@+id/btnsubmit_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="submit"
+                android:textColor="#FFF"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -45,9 +46,21 @@ public class SearchUrlAdapter extends RecyclerView.Adapter<SearchUrlAdapter.Sear
     public void onBindViewHolder(@NonNull SearchUrlViewHolder holder, int position) {
         SearchUrl searchUrl=searchUrlList.get(position);
         holder.tv_name.setText(searchUrl.getTitle());
-        holder.tv_url.setText(searchUrl.getLink());
-        holder.tv_email.setText(searchUrl.getEmail());
+        if(searchUrl.getPhone()==null){
+            holder.rlt_phone.setVisibility(View.GONE);
+        }
         holder.tv_phone.setText(searchUrl.getPhone());
+        if(searchUrl.getLink()==null){
+            holder.rlt_link.setVisibility(View.GONE);
+        }
+        holder.tv_url.setText(searchUrl.getLink());
+        if(searchUrl.getEmail()==null){
+            holder.rlt_email.setVisibility(View.GONE);
+        }
+        holder.tv_email.setText(searchUrl.getEmail());
+        if(searchUrl.getAddress()==null){
+            holder.rlt_address.setVisibility(View.GONE);
+        }
         holder.tv_add.setText(searchUrl.getAddress());
         Picasso.get()
                 .load(searchUrl.getPicUrl())
@@ -70,6 +83,7 @@ public class SearchUrlAdapter extends RecyclerView.Adapter<SearchUrlAdapter.Sear
 
         private ImageView imv_searchurl,imv_name_searchurl;
         private TextView tv_name,tv_phone,tv_add,tv_email,tv_url;
+        private RelativeLayout rlt_phone,rlt_email,rlt_link,rlt_address;
         public SearchUrlViewHolder(View itemView) {
             super(itemView);
             imv_searchurl=itemView.findViewById(R.id.imv_searchurl);
@@ -78,6 +92,10 @@ public class SearchUrlAdapter extends RecyclerView.Adapter<SearchUrlAdapter.Sear
             tv_email=itemView.findViewById(R.id.tv_email_searchurl);
             tv_add=itemView.findViewById(R.id.tv_address_searchurl);
             tv_url=itemView.findViewById(R.id.tv_url_searchurl);
+            rlt_phone=itemView.findViewById(R.id.rlt_phone);
+            rlt_email=itemView.findViewById(R.id.rlt_email);
+            rlt_link=itemView.findViewById(R.id.rlt_link);
+            rlt_address=itemView.findViewById(R.id.rlt_address);
 
             imv_name_searchurl=itemView.findViewById(R.id.imv_name_searchurl);
 

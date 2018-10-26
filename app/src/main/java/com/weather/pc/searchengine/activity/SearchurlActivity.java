@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +40,10 @@ public class SearchurlActivity extends AppCompatActivity implements SearchurlCli
     ImageView imv_keyback;
     @BindView(R.id.tv_title_searchurl)
     TextView tv_title;
+    @BindView(R.id.btncreate_new_website)
+    Button btncreatenew_website;
+    @BindView(R.id.progressbar_searchurl)
+    FrameLayout progressbar;
     private Retrofit retrofit;
     private SearchEngine searchEngine;
     public static final String BASE_URL="http://110.74.194.125:15000/api/v1/";
@@ -62,7 +70,17 @@ public class SearchurlActivity extends AppCompatActivity implements SearchurlCli
         imv_keyback.setOnClickListener(v->{
             finish();
         });
+//Create New website
+    btncreatenew_website.setOnClickListener(v->{
+        CreatenewWebsite();
+    });
 
+    }
+
+    private void CreatenewWebsite() {
+        Intent intent=new Intent(SearchurlActivity.this,RegisterWebsiteActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void setupRecyclerview() {
@@ -76,12 +94,16 @@ public class SearchurlActivity extends AppCompatActivity implements SearchurlCli
         call.enqueue(new Callback<SearchUrlRespone>() {
             @Override
             public void onResponse(Call<SearchUrlRespone> call, Response<SearchUrlRespone> response) {
-                Log.e(TAG, "onResponse: gg" );
-                if(response.body().getSearchurl()==null){
-                    Toast.makeText(SearchurlActivity.this, "No Data to Display!", Toast.LENGTH_SHORT).show();
-                }
+
                 List<SearchUrl> searchUrlList=response.body().getSearchurl();
-                adapter.AddSearchUrl(searchUrlList);
+                if(!(searchUrlList.isEmpty())){
+                    adapter.AddSearchUrl(searchUrlList);
+                    Hideprogressbar();
+                }else {
+                    Hideprogressbar();
+                    Alertdialog();
+                }
+
             }
 
             @Override
@@ -104,5 +126,23 @@ public class SearchurlActivity extends AppCompatActivity implements SearchurlCli
         Intent intent=new Intent(SearchurlActivity.this,DetailActivity.class);
         intent.putExtra("url",url);
         startActivity(intent);
+    }
+
+    private void Hideprogressbar(){
+        progressbar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+//Alert Message when no data
+    private void Alertdialog() {
+        new SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("No Data to Display")
+                .setConfirmButton("OK", new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        finish();
+                    }
+                })
+                .show();
     }
 }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,6 +39,8 @@ public class SubcategoryActivity extends AppCompatActivity implements Subcategor
     ImageView imv_keyback;
     @BindView(R.id.tv_title_subcategory)
     TextView tv_title;
+    @BindView(R.id.progressbar_subcat)
+    FrameLayout progressbar;
     private SubcategoryAdapter adapter;
     private Retrofit retrofit;
     private SearchEngine searchEngine;
@@ -70,10 +75,18 @@ public class SubcategoryActivity extends AppCompatActivity implements Subcategor
         call.enqueue(new Callback<SubCategoriesRespone>() {
             @Override
             public void onResponse(Call<SubCategoriesRespone> call, Response<SubCategoriesRespone> response) {
-                Log.e(TAG, "onResponse: success" );
-                if(response.body()!=null){
-                    List<Subcategories> subcategoriesList=response.body().getSubcategories();
+                //Log.e(TAG, "onResponse: success"+response.body().getSubcategories() );
+
+                List<Subcategories> subcategoriesList=response.body().getSubcategories();
+                if(!(subcategoriesList.isEmpty())){
+                    Log.e(TAG, "onResponse: yyy" );
                     adapter.AddSubcategories(subcategoriesList);
+                    Hideprogressbar();
+                }else {
+                    Hideprogressbar();
+                    Alertdialog();
+                    //Toast.makeText(SubcategoryActivity.this, "No Data to Display", Toast.LENGTH_SHORT).show();
+
                 }
 
             }
@@ -84,6 +97,19 @@ public class SubcategoryActivity extends AppCompatActivity implements Subcategor
             }
         });
     }
+    //alert dialog message
+    private void Alertdialog() {
+       new SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+               .setTitleText("No Data to Display")
+               .setConfirmButton("OK", new SweetAlertDialog.OnSweetClickListener() {
+                   @Override
+                   public void onClick(SweetAlertDialog sweetAlertDialog) {
+                       finish();
+                   }
+               })
+               .show();
+    }
+
     private void setUpRetrofit() {
         retrofit=new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -106,5 +132,13 @@ public class SubcategoryActivity extends AppCompatActivity implements Subcategor
         intent.putExtra("subcat",subcat);
         startActivity(intent);
     }
+
+    private void Hideprogressbar(){
+        progressbar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+
+
 }
 

@@ -33,11 +33,12 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="name"
-                   android:textSize="20sp"
+                   android:textSize="18sp"
                    android:textColor="#1081E0"
                    android:layout_toRightOf="@+id/imv_name_searchurl"/>
            </RelativeLayout>
            <RelativeLayout
+               android:id="@+id/rlt_phone"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content">
                <ImageView
@@ -54,6 +55,7 @@
                    android:layout_toRightOf="@id/imv_phone_searchurl"/>
            </RelativeLayout>
            <RelativeLayout
+               android:id="@+id/rlt_link"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content">
                <ImageView
@@ -71,6 +73,7 @@
                    android:layout_toRightOf="@id/imv_url_searchurl"/>
            </RelativeLayout>
            <RelativeLayout
+               android:id="@+id/rlt_email"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content">
                <ImageView
@@ -87,6 +90,7 @@
                    android:layout_toRightOf="@id/imv_email_searchurl"/>
            </RelativeLayout>
            <RelativeLayout
+               android:id="@+id/rlt_address"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content">
                <ImageView
