@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
     DrawerLayout drawerLayout;
     @BindView(R.id.progressbar_main)
     FrameLayout progressbar;
-//    @BindView(R.id.recyclerview)
-//    RecyclerView recyclerView;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
     @BindView(R.id.recyclerview_profile)
     RecyclerView recycler_profile;
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
 //    set Layout Manager Recyclerview
         setupRecyclerview();
 //    Load main categories from web service
-        //LoadMaincategories();
+        LoadMaincategories();
         //   get all sub categories
         getAllsubcategories();
 
@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
     }
 
     private void setupRecyclerview() {
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        adapter=new MaincategoryAdapter(this,this);
-//        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter=new MaincategoryAdapter(this,this);
+        recyclerView.setAdapter(adapter);
     }
     private void getAllsubcategories(){
         Call<GetAllSubCategoriesRespone> call=searchEngine.getAllSubcategories();
@@ -190,17 +190,19 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
             @Override
             public boolean onQueryTextChange(String newText) {
                 //recyclerView.setVisibility(View.GONE);
-                //item_list.setVisibility(View.VISIBLE);
+
                 List<Allsubcategories> allsubcate=new ArrayList<>();
+                recyclerView.setVisibility(View.GONE);
                 itemListAdapter.clearData();
                 for(Allsubcategories allsub:allsubcategoriesList){
                     if(allsub.getCateName().equals(newText)||allsub.getCateName().toLowerCase().contains(newText.toLowerCase())){
 
-                        Toast.makeText(MainActivity.this, ""+newText, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, ""+newText, Toast.LENGTH_SHORT).show();
                         allsubcate.add(allsub);
+                        item_list.setVisibility(View.VISIBLE);
                     }
                 }
-
+                //item_list.setVisibility(View.VISIBLE);
                 itemListAdapter.Setdata(allsubcate);
                 return true;
             }
@@ -221,8 +223,8 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
 
     private void Hideprogressbar(){
         progressbar.setVisibility(View.GONE);
-        //recyclerView.setVisibility(View.VISIBLE);
-        item_list.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        //item_list.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -233,7 +235,5 @@ public class MainActivity extends AppCompatActivity implements MaincategoryClick
         intent.putExtra("subcat",subcate);
         startActivity(intent);
     }
-
-
 
 }
